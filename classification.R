@@ -118,6 +118,7 @@ graphics.off()               # clear current plots
 plot(ndvi1,axes=FALSE,col=colorRampPalette(c("#20442C", "#D6FFD3"))(255))   # we give it a black-to-green colourmap
 
 
+
 # 3.2a Local Average
 calcLocalAverage <- function(img,KS) {
   
@@ -126,12 +127,15 @@ calcLocalAverage <- function(img,KS) {
   
   ####### YOUR CODE HERE #######
   
-  # loop through all layers (= bands) of img
-  for (layer in nlayers(img)) {
-    
-  }
-  focal(img, w, fun, filename='', na.rm=FALSE, pad=FALSE, padValue=NA, NAonly=FALSE, ...)
+  # create window matrix
+  window <- matrix(1, nrow = KS, ncol = KS)
   
+  # loop through all layers (= bands) of img
+  for (layer in 1:nlayers(img)) {
+    layer.mean <- focal(x = img[[layer]], w = window, fun = mean)
+    out <- addLayer(out, layer.mean)
+  }
+
   # Hints:
   # - Calculating a local average is a moving window operation,
   #   also known as a "focal" operation. Try to find out how to
@@ -143,7 +147,6 @@ calcLocalAverage <- function(img,KS) {
   #   Check the documentation to find out how to address these
   #   special cases.
   
-  out <- ...
   ##############################
   
   # assign names
@@ -151,7 +154,6 @@ calcLocalAverage <- function(img,KS) {
   
   return(out)
 }
-
 
 # define kernel size
 KS = 5
