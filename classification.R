@@ -187,18 +187,28 @@ im2 <- stack(c(im2,locAvg_im2))
 # Remember to only use the five bands at maximal resolution (R-G-B-NIR-NDVI),
 # not the local averages. You can select bands by using "img[[1:5]]".
 
-
 calcLocalStandardDeviation <- function(img,KS) {
   
   ####### YOUR CODE HERE #######
-  localSd <- ...
+  
+  # prepare empty output
+  localSd <- brick()
+  
+  # calculate window size n
+  n <- KS ^ 2
+
+  # loop through all original bands of image
+  for (layer in 1:5) {
+    layer.var <- (n / (n - 1)) * ((calcLocalAverage(img[[layer]] ^ 2, KS) - calcLocalAverage(img[[layer]], KS) ^ 2))
+    localSd <- addLayer(localSd, layer.var)
+  }
   ##############################
   
   # remove potential NaN values
   localSd[is.na(localSd)] = 0
   
   # assign names
-  names(localSd) <- sprintf("locStd_%s_%s",KS,names(img))
+  names(localSd) <- sprintf("locStd_%s_%s",KS,names(img)[1:5])
   
   return(localSd)
 }
@@ -207,7 +217,10 @@ calcLocalStandardDeviation <- function(img,KS) {
 # now apply the function, like above
 
 ####### YOUR CODE HERE #######
-...
+locSd_im1 <- calcLocalStandardDeviation(im1,KS)
+im1 <- stack(c(im1,locSd_im1))
+locSd_im2 <- calcLocalStandardDeviation(im2,KS)
+im2 <- stack(c(im2,locSd_im2))
 ##############################
 
 
