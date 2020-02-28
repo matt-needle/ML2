@@ -28,7 +28,7 @@ library(rgdal)
 
 
 # set working directory (MODIFY THE PATH FOR YOUR CASE ACCORDINGLY)
-# setwd('C:/Users/needl002/OneDrive - WageningenUR/Machine Learning/Project/Week 2')
+setwd('/home/sytze/Documents/WUR/Machine Learning/Week2/Project/ML2')
 
 
 
@@ -118,8 +118,6 @@ graphics.off()               # clear current plots
 plot(ndvi1,axes=FALSE,col=colorRampPalette(c("#20442C", "#D6FFD3"))(255))   # we give it a black-to-green colourmap
 
 
-
-
 # 3.2a Local Average
 calcLocalAverage <- function(img,KS) {
   
@@ -127,6 +125,12 @@ calcLocalAverage <- function(img,KS) {
   out <- brick()
   
   ####### YOUR CODE HERE #######
+  
+  # loop through all layers (= bands) of img
+  for (layer in nlayers(img)) {
+    
+  }
+  focal(img, w, fun, filename='', na.rm=FALSE, pad=FALSE, padValue=NA, NAonly=FALSE, ...)
   
   # Hints:
   # - Calculating a local average is a moving window operation,
