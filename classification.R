@@ -286,7 +286,7 @@ normalise <- function(img, means = NULL, stdDevs = NULL) {
 # Refer to the PDF for details.
 normalisation <- normalise(im1)
 im1 <- normalisation[[1]]
-im2 <- normalise(im2, normalisation[[2]], normalisation[[3]])
+im2 <- normalise(im2, normalisation[[2]], normalisation[[3]])[[1]]
 ##############################
 
 
@@ -340,7 +340,8 @@ plot(gt1_val,col=classColors[1:(max(unique(gt1_val))+1)],main="Validation Set",a
 
 
 
-
+# set seed for comparison
+set.seed(69)
 
 
 # ----------------------------------------------
@@ -393,9 +394,6 @@ for(c in cls_train) {
 # verify that the "zero" class is not present in the training set
 sprintf("Training set classes: %s", paste(unique(y_train[valid_train]),collapse=", "))
 
-
-
-
 # do the evaluation: iterate over all the parameter combinations
 for(nT in 1:length(numTrees_range)) {
   for(mL in 1:length(minLeaf_range)) {
@@ -408,7 +406,7 @@ for(nT in 1:length(numTrees_range)) {
     ####### YOUR CODE HERE #######
     
     # Hint: remember to subset the data you use for training the Random Forest
-    rf_model <- randomForest(...)
+    rf_model <- randomForest(y_train ~ ., data = x_train, subset = valid_train, ntree = numTrees_range[nT], mtry = minLeaf_range[mL])
     ##############################
     
     time_crossval[nT,mL] <- (Sys.time() - starttime)
@@ -449,8 +447,8 @@ title("Time Required to train RF")
 # pick your favourite parameters according to plot
 
 ####### YOUR CODE HERE #######
-minLeafSize <- ...
-numTrees <- ...
+minLeafSize <- 2
+numTrees <- 25
 ##############################
 
 
