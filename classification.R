@@ -200,7 +200,8 @@ calcLocalStandardDeviation <- function(img,KS) {
   # loop through all original bands of image
   for (layer in 1:5) {
     layer.var <- (n / (n - 1)) * ((calcLocalAverage(img[[layer]] ^ 2, KS) - calcLocalAverage(img[[layer]], KS) ^ 2))
-    localSd <- addLayer(localSd, layer.var)
+    layer.s_dev <- N/(N-1) * sqrt(((calcLocalAverage(img[[i]]^2, KS) - calcLocalAverage(img[[i]], KS)^2)))
+    localSd <- addLayer(localSd, layer.s_dev)
   }
   ##############################
   
