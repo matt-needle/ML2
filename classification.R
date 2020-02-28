@@ -265,7 +265,7 @@ im2[is.na(im2)] = 0
 
 
 # 3.4 Normalise the data
-normalise <- function(img,means,stdDevs) {
+normalise <- function(img, means = NULL, stdDevs = NULL) {
   if(is.null(means)) {
     means <- cellStats(img,mean)
     stdDevs <- cellStats(img,sd)
@@ -284,7 +284,9 @@ normalise <- function(img,means,stdDevs) {
 
 # Hint: remember which statistics to use for which image.
 # Refer to the PDF for details.
-... <- normalise(...)
+normalisation <- normalise(im1)
+im1 <- normalisation[[1]]
+im2 <- normalise(im2, normalisation[[2]], normalisation[[3]])
 ##############################
 
 
