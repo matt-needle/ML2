@@ -26,13 +26,6 @@ library(randomForest)         # our actual classifier is implemented in this pac
 library(caret)                # collection of various machine learning tools. We use it here for the confusion matrix at the end
 library(rgdal)
 
-
-# set working directory (MODIFY THE PATH FOR YOUR CASE ACCORDINGLY)
-setwd('C:/Users/needl002/OneDrive - WageningenUR/Machine Learning/Project/Week 2')
-
-
-
-
 # ----------------------------------------------
 # 2. Data Preparation
 # ----------------------------------------------
